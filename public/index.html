@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>BIG 5 STANDINGS</title>
+    <title>BIG5 Standings - The Ultimate Table for Europe's Top Football Leagues</title>
+    <meta name="description" content="Stay updated with real-time standings, top goal scorers, and assist leaders from Europe's premier football leagues: Premier League, La Liga, Serie A, Bundesliga, and Ligue 1.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -93,9 +94,7 @@
         font-weight: 700;
         border-bottom: 2px solid var(--accent-color);
       }
-      td {
-        cursor: default;
-      }
+      td { cursor: default; }
       /* Left-align specific cells */
       td.team-name, td.league-cell { text-align: left; }
       td.scorer-player, td.scorer-club, td.scorer-league,
@@ -154,6 +153,15 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
       }
+      /* Rotating football emoji for loading */
+      .rotate {
+        display: inline-block;
+        animation: rotation 2s infinite linear;
+      }
+      @keyframes rotation {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
       /* Scorers table: fix column widths (with extra G/A column) */
       .scorers-table {
         table-layout: fixed;
@@ -190,8 +198,8 @@
     </style>
   </head>
   <body>
-    <h1>BIG 5 STANDINGS</h1>
-    <h2>Who's Leading Europe's Top Football Leagues?</h2>
+    <h1>BIG5 STANDINGS</h1>
+    <h2>The Ultimate Table for Europe's Top Football Leagues</h2>
     
     <!-- Controls: left group and dark mode toggle on right -->
     <div id="controls">
@@ -210,7 +218,7 @@
       <button id="darkModeToggle" onclick="toggleDarkMode()" title="Dark Mode">🌙</button>
     </div>
     
-    <div id="standings">Loading data...</div>
+    <div id="standings"><span class="rotate">⚽</span> Loading data...</div>
     
     <script>
       let currentSeason = parseInt(document.getElementById("seasonDropdown").value, 10);
