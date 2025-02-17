@@ -2,22 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>BIG5 Standings - The Ultimate Table for Europe's Top Football Leagues</title>
-    <meta name="description" content="Stay updated with real-time standings, top goal scorers, and assist leaders from Europe's premier football leagues: Premier League, La Liga, Serie A, Bundesliga, and Ligue 1.">
+    <title>
+      BIG5 Standings - The Ultimate Table for Europe's Top Football Leagues
+    </title>
+    <meta
+      name="description"
+      content="Stay updated with real-time standings, top goal scorers, and assist leaders from Europe's premier football leagues: Premier League, La Liga, Serie A, Bundesliga, and Ligue 1."
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <!-- Google Fonts for the new typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Favicon: Ensure favicon.png is in your static folder -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Google Fonts: Title uses Roboto Slab; Main text uses Space Grotesk -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Bright (light mode) color variables – shades of light green */
       :root {
-        --bg-color: #e6f9e6;       /* very light green */
-        --text-color: #2e662e;     /* dark green */
-        --accent-color: #4CAF50;   /* medium green accent */
-        --live-color: #FF4500;     /* bright red-orange for live highlights */
-        --card-bg: #f0fff0;        /* subtle green tint for cards */
-        --border-color: #c8e6c9;    /* light green border */
+        --bg-color: #e6f9e6; /* very light green */
+        --text-color: #2e662e; /* dark green */
+        --accent-color: #4caf50; /* medium green accent */
+        --live-color: #d32f2f; /* a deep red for live highlights */
+        --card-bg: #f0fff0; /* subtle green tint for cards */
+        --border-color: #c8e6c9; /* light green border */
         --radius: 8px;
       }
       /* Dark mode variables */
@@ -25,18 +33,21 @@
         --bg-color: #1e2d1e;
         --text-color: #e0f2e0;
         --accent-color: #81c784;
-        --live-color: #FF6347;
+        --live-color: #ef6c00;
         --card-bg: #2a392a;
         --border-color: #4caf50;
       }
-      /* Main font: Space Grotesk */
+      /* For titles we use Roboto Slab; for body and tables, Space Grotesk */
       body {
         background-color: var(--bg-color);
         color: var(--text-color);
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: "Space Grotesk", sans-serif;
         margin: 20px;
       }
-      /* Title and subheader styling */
+      h1,
+      h2 {
+        font-family: "Roboto Slab", serif;
+      }
       h1 {
         text-align: center;
         font-weight: 700;
@@ -61,7 +72,9 @@
         vertical-align: middle;
         margin-right: 10px;
       }
-      button, select {
+      /* Buttons and selects (only clickable elements) */
+      button,
+      select {
         padding: 8px 16px;
         font-size: 16px;
         border: 1px solid var(--border-color);
@@ -70,6 +83,10 @@
         color: var(--text-color);
         box-shadow: 0 2px 0 var(--accent-color);
         cursor: pointer;
+      }
+      /* Ensure non-clickable table cells use default cursor */
+      td {
+        cursor: default;
       }
       /* Table styles: use separate collapse with explicit rounding on corners */
       table {
@@ -81,12 +98,13 @@
         border-radius: var(--radius);
         overflow: hidden;
       }
-      th, td {
+      th,
+      td {
         border: 1px solid var(--border-color);
         padding: 8px;
         text-align: center;
       }
-      /* Only header cells should show pointer */
+      /* Only header cells should use pointer */
       th {
         cursor: pointer;
         background-color: var(--card-bg);
@@ -94,11 +112,18 @@
         font-weight: 700;
         border-bottom: 2px solid var(--accent-color);
       }
-      td { cursor: default; }
       /* Left-align specific cells */
-      td.team-name, td.league-cell { text-align: left; }
-      td.scorer-player, td.scorer-club, td.scorer-league,
-      td.assist-player, td.assist-club { text-align: left; }
+      td.team-name,
+      td.league-cell {
+        text-align: left;
+      }
+      td.scorer-player,
+      td.scorer-club,
+      td.scorer-league,
+      td.assist-player,
+      td.assist-club {
+        text-align: left;
+      }
       /* Force rounded corners on table header and footer cells */
       table tr:first-child th:first-child {
         border-top-left-radius: var(--radius);
@@ -149,9 +174,15 @@
         animation: blink 2.5s infinite;
       }
       @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
       }
       /* Rotating football emoji for loading */
       .rotate {
@@ -159,85 +190,165 @@
         animation: rotation 2s infinite linear;
       }
       @keyframes rotation {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
-      /* Scorers table: fix column widths (with extra G/A column) */
+      /* Scorers table: fixed column widths including new G/A column */
       .scorers-table {
         table-layout: fixed;
         width: 100%;
       }
-      .scorers-table th:nth-child(1) { width: 5%; }   /* Rank */
-      .scorers-table th:nth-child(2) { width: 25%; }  /* Player */
-      .scorers-table th:nth-child(3) { width: 25%; }  /* Club */
-      .scorers-table th:nth-child(4) { width: 15%; }  /* League */
-      .scorers-table th:nth-child(5) { width: 10%; }  /* Goals */
-      .scorers-table th:nth-child(6) { width: 10%; }  /* G/A */
-      .scorers-table th:nth-child(7) { width: 10%; }  /* GPG */
+      .scorers-table th:nth-child(1) {
+        width: 5%;
+      } /* Rank */
+      .scorers-table th:nth-child(2) {
+        width: 25%;
+      } /* Player */
+      .scorers-table th:nth-child(3) {
+        width: 25%;
+      } /* Club */
+      .scorers-table th:nth-child(4) {
+        width: 15%;
+      } /* League */
+      .scorers-table th:nth-child(5) {
+        width: 10%;
+      } /* Goals */
+      .scorers-table th:nth-child(6) {
+        width: 10%;
+      } /* G/A */
+      .scorers-table th:nth-child(7) {
+        width: 10%;
+      } /* GPG */
       /* Assists table widths remain as before */
       .assists-table {
         table-layout: fixed;
         width: 100%;
       }
-      .assists-table th:nth-child(1) { width: 5%; }
-      .assists-table th:nth-child(2) { width: 30%; }
-      .assists-table th:nth-child(3) { width: 30%; }
-      .assists-table th:nth-child(4) { width: 20%; }
-      .assists-table th:nth-child(5) { width: 10%; }
-      .assists-table th:nth-child(6) { width: 5%; }
-      .assists-table th:nth-child(7) { width: 10%; }
+      .assists-table th:nth-child(1) {
+        width: 5%;
+      }
+      .assists-table th:nth-child(2) {
+        width: 30%;
+      }
+      .assists-table th:nth-child(3) {
+        width: 30%;
+      }
+      .assists-table th:nth-child(4) {
+        width: 20%;
+      }
+      .assists-table th:nth-child(5) {
+        width: 10%;
+      }
+      .assists-table th:nth-child(6) {
+        width: 5%;
+      }
+      .assists-table th:nth-child(7) {
+        width: 10%;
+      }
       /* Media query for mobile optimization */
       @media (max-width: 600px) {
-        body { margin: 10px; font-size: 14px; }
-        h1 { font-size: 1.8em; }
-        h2 { font-size: 1em; margin: 5px 0 10px; }
-        button, select { padding: 10px 14px; font-size: 16px; }
-        th, td { padding: 6px; font-size: 12px; }
-        #standings table { display: block; overflow-x: auto; white-space: nowrap; }
+        body {
+          margin: 10px;
+          font-size: 14px;
+        }
+        h1 {
+          font-size: 1.8em;
+        }
+        h2 {
+          font-size: 1em;
+          margin: 5px 0 10px;
+        }
+        button,
+        select {
+          padding: 10px 14px;
+          font-size: 16px;
+        }
+        th,
+        td {
+          padding: 6px;
+          font-size: 12px;
+        }
+        #standings table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-KBTW12E0RN"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-KBTW12E0RN");
+    </script>
   </head>
   <body>
     <h1>BIG5 STANDINGS</h1>
-    <h2>The Ultimate Table for Europe's Top Football Leagues</h2>
-    
+    <h2>Who's Leading Europe's Top Football Leagues?</h2>
+
     <!-- Controls: left group and dark mode toggle on right -->
     <div id="controls">
       <div id="left-controls">
         <button id="refreshBtn" onclick="loadData()" title="Refresh">🔄</button>
-        <select id="viewDropdown" onchange="changeView(this.value)" title="Select View">
+        <select
+          id="viewDropdown"
+          onchange="changeView(this.value)"
+          title="Select View"
+        >
           <option value="table">Standings</option>
           <option value="scorers">Goal Scorers</option>
           <option value="assists">Assists</option>
         </select>
-        <select id="seasonDropdown" onchange="changeSeason(this.value)" title="Select Season">
+        <select
+          id="seasonDropdown"
+          onchange="changeSeason(this.value)"
+          title="Select Season"
+        >
           <option value="2025">2024/25</option>
           <option value="2024">2023/24</option>
         </select>
       </div>
-      <button id="darkModeToggle" onclick="toggleDarkMode()" title="Dark Mode">🌙</button>
+      <button id="darkModeToggle" onclick="toggleDarkMode()" title="Dark Mode">
+        🌙
+      </button>
     </div>
-    
+
+    <!-- Loading message with rotating football emoji -->
     <div id="standings"><span class="rotate">⚽</span> Loading data...</div>
-    
+
     <script>
-      let currentSeason = parseInt(document.getElementById("seasonDropdown").value, 10);
+      let currentSeason = parseInt(
+        document.getElementById("seasonDropdown").value,
+        10
+      );
       let currentView = document.getElementById("viewDropdown").value; // "table", "scorers", or "assists"
-      
+
       function changeView(view) {
         currentView = view;
         loadData();
       }
-      
+
       function changeSeason(season) {
         currentSeason = parseInt(season, 10);
         loadData();
       }
-      
+
       function toggleDarkMode() {
-        document.body.classList.toggle('dark');
+        document.body.classList.toggle("dark");
         const darkBtn = document.getElementById("darkModeToggle");
-        if (document.body.classList.contains('dark')) {
+        if (document.body.classList.contains("dark")) {
           darkBtn.innerText = "☀️";
           darkBtn.title = "Light Mode";
         } else {
@@ -245,78 +356,118 @@
           darkBtn.title = "Dark Mode";
         }
       }
-      
+
       const API_KEY = "eac1def5f44245d0ba2ae2d1312901af";
-      
+
       const leagues = [
-        { name: "Premier League", code: "PL", emblem: "https://crests.football-data.org/PL.png" },
-        { name: "Serie A", code: "SA", emblem: "https://crests.football-data.org/SA.png" },
-        { name: "La Liga", code: "PD", emblem: "https://crests.football-data.org/PD.png" },
-        { name: "Bundesliga", code: "BL1", emblem: "https://crests.football-data.org/BL1.png" },
-        { name: "Ligue 1", code: "FL1", emblem: "https://crests.football-data.org/FL1.png" }
+        {
+          name: "Premier League",
+          code: "PL",
+          emblem: "https://crests.football-data.org/PL.png",
+        },
+        {
+          name: "Serie A",
+          code: "SA",
+          emblem: "https://crests.football-data.org/SA.png",
+        },
+        {
+          name: "La Liga",
+          code: "PD",
+          emblem: "https://crests.football-data.org/PD.png",
+        },
+        {
+          name: "Bundesliga",
+          code: "BL1",
+          emblem: "https://crests.football-data.org/BL1.png",
+        },
+        {
+          name: "Ligue 1",
+          code: "FL1",
+          emblem: "https://crests.football-data.org/FL1.png",
+        },
       ];
-      
+
       function getLeagueEmblem(leagueName) {
-        const league = leagues.find(l => l.name === leagueName);
+        const league = leagues.find((l) => l.name === leagueName);
         return league && league.emblem ? league.emblem : "";
       }
-      
+
       let allTeamsGlobal = [];
       let allScorersGlobal = [];
       let allAssistsGlobal = [];
       let currentSortColumn = null;
       let currentSortOrder = 1;
-      
-      // Live formatting: wraps content in bold with live color if the match is live.
+
+      // liveFormat: wraps content in bold with live color if live.
       function liveFormat(content, isLive) {
-        return isLive ? `<b style="color:var(--live-color);">${content}</b>` : content;
+        return isLive
+          ? `<b style="color:var(--live-color);">${content}</b>`
+          : content;
       }
-      
+
       async function fetchLeagueStandings(league) {
         const apiSeason = currentSeason - 1;
         const url = `/proxy?code=${league.code}&season=${apiSeason}`;
         try {
           const response = await fetch(url);
           const data = await response.json();
-          console.log(`Data for ${league.name} (API season ${apiSeason}):`, data);
+          console.log(
+            `Data for ${league.name} (API season ${apiSeason}):`,
+            data
+          );
           if (data.standings && data.standings.length > 0) {
-            const table = data.standings.find(s => s.type === "TOTAL") || data.standings[0];
-            return table.table.map(entry => ({
+            const table =
+              data.standings.find((s) => s.type === "TOTAL") ||
+              data.standings[0];
+            return table.table.map((entry) => ({
               ...entry,
-              league: league.name
+              league: league.name,
             }));
           } else {
-            console.warn(`No standings found for ${league.name} in API season ${apiSeason}`);
+            console.warn(
+              `No standings found for ${league.name} in API season ${apiSeason}`
+            );
             return [];
           }
         } catch (error) {
-          console.error(`Error fetching data for ${league.name} (API season ${apiSeason}):`, error);
+          console.error(
+            `Error fetching data for ${league.name} (API season ${apiSeason}):`,
+            error
+          );
           return [];
         }
       }
-      
+
       async function fetchLeagueScorers(league) {
         const apiSeason = currentSeason - 1;
         const url = `/proxy-scorers?code=${league.code}&season=${apiSeason}`;
         try {
           const response = await fetch(url);
           const data = await response.json();
-          console.log(`Scorers for ${league.name} (API season ${apiSeason}):`, data);
+          console.log(
+            `Scorers for ${league.name} (API season ${apiSeason}):`,
+            data
+          );
           if (data.scorers && data.scorers.length > 0) {
-            return data.scorers.map(item => ({
+            return data.scorers.map((item) => ({
               ...item,
-              league: league.name
+              league: league.name,
             }));
           } else {
-            console.warn(`No scorers found for ${league.name} in API season ${apiSeason}`);
+            console.warn(
+              `No scorers found for ${league.name} in API season ${apiSeason}`
+            );
             return [];
           }
         } catch (error) {
-          console.error(`Error fetching scorers for ${league.name} (API season ${apiSeason}):`, error);
+          console.error(
+            `Error fetching scorers for ${league.name} (API season ${apiSeason}):`,
+            error
+          );
           return [];
         }
       }
-      
+
       async function fetchLiveMatches() {
         const url = `/proxy-live?status=IN_PLAY`;
         try {
@@ -329,27 +480,29 @@
           return [];
         }
       }
-      
+
       async function updateLiveFlags(teams) {
         if (currentSeason !== 2025 || currentView !== "table") {
-          teams.forEach(team => team.live = false);
+          teams.forEach((team) => (team.live = false));
           return;
         }
         const liveMatches = await fetchLiveMatches();
         const liveResults = {};
-        liveMatches.forEach(match => {
+        liveMatches.forEach((match) => {
           if (match.status === "IN_PLAY" || match.status === "PAUSED") {
             const homeId = match.homeTeam.id;
             const awayId = match.awayTeam.id;
             const homeScore = match.score.fullTime.home;
             const awayScore = match.score.fullTime.away;
             console.log(`Match ${match.id}: ${homeScore} vs ${awayScore}`);
-            liveResults[homeId] = homeScore > awayScore ? "W" : (homeScore === awayScore ? "D" : "L");
-            liveResults[awayId] = awayScore > homeScore ? "W" : (awayScore === homeScore ? "D" : "L");
+            liveResults[homeId] =
+              homeScore > awayScore ? "W" : homeScore === awayScore ? "D" : "L";
+            liveResults[awayId] =
+              awayScore > homeScore ? "W" : awayScore === homeScore ? "D" : "L";
           }
         });
         console.log("Live results mapping:", liveResults);
-        teams.forEach(team => {
+        teams.forEach((team) => {
           if (liveResults.hasOwnProperty(team.team.id)) {
             team.live = true;
             team.liveResult = liveResults[team.team.id];
@@ -358,8 +511,8 @@
           }
         });
       }
-      
-      // Renders the Standings (League Table) view
+
+      // Standings view – note "Club" is used instead of "Team"
       function renderTable(teams) {
         const standingsDiv = document.getElementById("standings");
         let html = `<table>
@@ -377,13 +530,15 @@
     <th class="sortable" onclick="sortTable('points')" title="Points">Pts</th>
     <th class="sortable" onclick="sortTable('pointsPerMatch')" title="Points per Match">PPM</th>
   </tr>`;
-      
+
         teams.forEach((team, index) => {
           console.log("Team object for", team.team.name, ":", team.team);
           let crestUrl = team.team.crestUrl || team.team.crest;
           let longName = team.team.name;
           let shortName = team.team.shortName || longName;
-          let teamLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(longName)}" target="_blank" style="text-decoration:none; color:inherit;">${shortName}</a>`;
+          let teamLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(
+            longName
+          )}" target="_blank" style="text-decoration:none; color:inherit;">${shortName}</a>`;
           let teamCell = "";
           if (crestUrl) {
             teamCell = `<img src="${crestUrl}" alt="${longName} Crest" style="height:20px; margin-right:5px; vertical-align: middle;">`;
@@ -399,13 +554,25 @@
             leagueCell = `<img src="${leagueEmblem}" alt="${team.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
           }
           leagueCell += team.league;
-          
-          let wins = team.live && team.liveResult === "W" ? liveFormat(team.won, true) : team.won;
-          let draws = team.live && team.liveResult === "D" ? liveFormat(team.draw, true) : team.draw;
-          let losses = team.live && team.liveResult === "L" ? liveFormat(team.lost, true) : team.lost;
+
+          let wins =
+            team.live && team.liveResult === "W"
+              ? liveFormat(team.won, true)
+              : team.won;
+          let draws =
+            team.live && team.liveResult === "D"
+              ? liveFormat(team.draw, true)
+              : team.draw;
+          let losses =
+            team.live && team.liveResult === "L"
+              ? liveFormat(team.lost, true)
+              : team.lost;
           let points = team.live ? liveFormat(team.points, true) : team.points;
-          let ppm = team.playedGames > 0 ? (team.points / team.playedGames).toFixed(2) : "0.00";
-          
+          let ppm =
+            team.playedGames > 0
+              ? (team.points / team.playedGames).toFixed(2)
+              : "0.00";
+
           html += `<tr>
     <td>${index + 1}</td>
     <td class="team-name">${teamCell}</td>
@@ -425,8 +592,8 @@
         standingsDiv.innerHTML = html;
         updateSortIndicators();
       }
-      
-      // Renders the Goal Scorers view with an extra G/A column.
+
+      // Goal Scorers view – column 5 is "Goals", 6 is "G/A", 7 is "GPG" (Goals per Game)
       function renderScorers(scorers) {
         const standingsDiv = document.getElementById("standings");
         let html = `<table class="scorers-table">
@@ -435,25 +602,34 @@
     <th class="sortable" onclick="sortScorers('player')" title="Player">Player</th>
     <th class="sortable" onclick="sortScorers('club')" title="Club">Club</th>
     <th class="sortable" onclick="sortScorers('league')" title="League">League</th>
-    <th class="sortable" onclick="sortScorers('goals')" title="Goals">Goals</th>
-    <th class="sortable" onclick="sortScorers('ga')" title="Goal Contributions">G/A</th>
+    <th class="sortable" onclick="sortScorers('goals')" title="Goals Scored">Goals</th>
+    <th class="sortable" onclick="sortScorers('ga')" title="Goal Contributions (Goals + Assists)">G/A</th>
     <th class="sortable" onclick="sortScorers('goalsPerMatch')" title="Goals per Game">GPG</th>
   </tr>`;
         scorers.forEach((item, index) => {
           let goals = item.goals !== undefined ? item.goals : 0;
           let assists = item.assists !== undefined ? item.assists : 0;
           let ga = goals + assists;
-          let matches = (item.playedMatches && item.playedMatches > 0) ? item.playedMatches : 1;
+          let matches =
+            item.playedMatches && item.playedMatches > 0
+              ? item.playedMatches
+              : 1;
           let gpg = (goals / matches).toFixed(2);
           let playerName = item.player.name;
-          let playerLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(playerName)}" target="_blank" style="text-decoration:none; color:inherit;">${playerName}</a>`;
+          let playerLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(
+            playerName
+          )}" target="_blank" style="text-decoration:none; color:inherit;">${playerName}</a>`;
           let clubName = "";
           if (item.team) {
             let clubLogo = item.team.crest || "";
             if (clubLogo) {
               clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
             }
-            clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(item.team.name)}" target="_blank" style="text-decoration:none; color:inherit;">${item.team.shortName || item.team.name}</a>`;
+            clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(
+              item.team.name
+            )}" target="_blank" style="text-decoration:none; color:inherit;">${
+              item.team.shortName || item.team.name
+            }</a>`;
           }
           let leagueEmblem = getLeagueEmblem(item.league);
           let leagueCell = "";
@@ -461,7 +637,7 @@
             leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
           }
           leagueCell += item.league || "";
-          
+
           html += `<tr>
     <td>${index + 1}</td>
     <td class="scorer-player" style="text-align: left;">${playerLink}</td>
@@ -476,11 +652,12 @@
         standingsDiv.innerHTML = html;
         updateScorersSortIndicators();
       }
-      
-      // Renders the Assists view
+
+      // Assists view – filter out players with zero assists.
       function renderAssists(assistsData) {
-        // Filter out any items with zero assists
-        const filtered = assistsData.filter(item => item.assists && item.assists > 0);
+        const filtered = assistsData.filter(
+          (item) => item.assists && item.assists > 0
+        );
         const standingsDiv = document.getElementById("standings");
         let html = `<table class="assists-table">
   <tr>
@@ -490,23 +667,32 @@
     <th class="sortable" onclick="sortAssists('league')" title="League">League</th>
     <th class="sortable" onclick="sortAssists('assists')" title="Assists">Assists</th>
     <th class="sortable" onclick="sortAssists('apm')" title="Assists per Game">APM</th>
-    <th class="sortable" onclick="sortAssists('ga')" title="Goal Contributions">G/A</th>
+    <th class="sortable" onclick="sortAssists('ga')" title="Goal Contributions (Goals + Assists)">G/A</th>
   </tr>`;
         filtered.forEach((item, index) => {
           let assists = item.assists !== undefined ? item.assists : 0;
           let goals = item.goals !== undefined ? item.goals : 0;
-          let played = item.playedMatches && item.playedMatches > 0 ? item.playedMatches : 1;
+          let played =
+            item.playedMatches && item.playedMatches > 0
+              ? item.playedMatches
+              : 1;
           let apm = (assists / played).toFixed(2);
           let ga = goals + assists;
           let playerName = item.player.name;
-          let playerLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(playerName)}" target="_blank" style="text-decoration:none; color:inherit;">${playerName}</a>`;
+          let playerLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(
+            playerName
+          )}" target="_blank" style="text-decoration:none; color:inherit;">${playerName}</a>`;
           let clubName = "";
           if (item.team) {
             let clubLogo = item.team.crest || "";
             if (clubLogo) {
               clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
             }
-            clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(item.team.name)}" target="_blank" style="text-decoration:none; color:inherit;">${item.team.shortName || item.team.name}</a>`;
+            clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(
+              item.team.name
+            )}" target="_blank" style="text-decoration:none; color:inherit;">${
+              item.team.shortName || item.team.name
+            }</a>`;
           }
           let leagueEmblem = getLeagueEmblem(item.league);
           let leagueCell = "";
@@ -514,7 +700,7 @@
             leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
           }
           leagueCell += item.league || "";
-          
+
           html += `<tr>
     <td>${index + 1}</td>
     <td class="assist-player" style="text-align: left;">${playerLink}</td>
@@ -529,10 +715,12 @@
         standingsDiv.innerHTML = html;
         updateAssistsSortIndicators();
       }
-      
+
       async function loadStandings() {
         try {
-          const promises = leagues.map(league => fetchLeagueStandings(league));
+          const promises = leagues.map((league) =>
+            fetchLeagueStandings(league)
+          );
           const results = await Promise.all(promises);
           const allTeams = results.flat();
           console.log("Combined teams:", allTeams);
@@ -551,10 +739,10 @@
           console.error("Error combining standings:", error);
         }
       }
-      
+
       async function loadTopScorers() {
         try {
-          const promises = leagues.map(league => fetchLeagueScorers(league));
+          const promises = leagues.map((league) => fetchLeagueScorers(league));
           const results = await Promise.all(promises);
           const allScorers = results.flat();
           console.log("Combined scorers:", allScorers);
@@ -569,10 +757,10 @@
           console.error("Error combining scorers:", error);
         }
       }
-      
+
       async function loadAssists() {
         try {
-          const promises = leagues.map(league => fetchLeagueScorers(league));
+          const promises = leagues.map((league) => fetchLeagueScorers(league));
           const results = await Promise.all(promises);
           const allAssists = results.flat();
           console.log("Combined assists data:", allAssists);
@@ -587,7 +775,7 @@
           console.error("Error combining assists:", error);
         }
       }
-      
+
       function loadData() {
         if (currentView === "table") {
           loadStandings();
@@ -597,7 +785,7 @@
           loadAssists();
         }
       }
-      
+
       function sortTable(columnKey) {
         if (currentSortColumn === columnKey) {
           currentSortOrder *= -1;
@@ -621,8 +809,10 @@
             bVal = b[columnKey];
           }
           if (columnKey === "points" && a.points === b.points) {
-            if (a.goalDifference < b.goalDifference) return -1 * currentSortOrder;
-            if (a.goalDifference > b.goalDifference) return 1 * currentSortOrder;
+            if (a.goalDifference < b.goalDifference)
+              return -1 * currentSortOrder;
+            if (a.goalDifference > b.goalDifference)
+              return 1 * currentSortOrder;
             return 0;
           }
           if (aVal < bVal) return -1 * currentSortOrder;
@@ -631,7 +821,7 @@
         });
         renderTable(allTeamsGlobal);
       }
-      
+
       let currentScorerSortColumn = null;
       let currentScorerSortOrder = 1;
       function sortScorers(columnKey) {
@@ -642,7 +832,8 @@
           currentScorerSortOrder = -1;
         }
         allScorersGlobal.sort((a, b) => {
-          let aVal = a[columnKey], bVal = b[columnKey];
+          let aVal = a[columnKey],
+            bVal = b[columnKey];
           if (columnKey === "player") {
             aVal = a.player.name.toUpperCase();
             bVal = b.player.name.toUpperCase();
@@ -662,7 +853,7 @@
         });
         renderScorers(allScorersGlobal);
       }
-      
+
       let currentAssistsSortColumn = null;
       let currentAssistsSortOrder = 1;
       function sortAssists(columnKey) {
@@ -699,10 +890,10 @@
         });
         renderAssists(allAssistsGlobal);
       }
-      
+
       function updateSortIndicators() {
         const ths = document.querySelectorAll("th.sortable");
-        ths.forEach(th => th.classList.remove("sorted-asc", "sorted-desc"));
+        ths.forEach((th) => th.classList.remove("sorted-asc", "sorted-desc"));
         const headers = {
           team: 2,
           league: 3,
@@ -714,62 +905,75 @@
           goalsFor: 9,
           goalsAgainst: 10,
           points: 11,
-          pointsPerMatch: 12
+          pointsPerMatch: 12,
         };
         const index = headers[currentSortColumn];
         if (index) {
           const th = document.querySelector(`tr th:nth-child(${index})`);
           if (th) {
-            th.classList.add(currentSortOrder === 1 ? "sorted-asc" : "sorted-desc");
+            th.classList.add(
+              currentSortOrder === 1 ? "sorted-asc" : "sorted-desc"
+            );
           }
         }
       }
-      
+
       function updateScorersSortIndicators() {
         const ths = document.querySelectorAll("th.sortable");
-        ths.forEach(th => th.classList.remove("sorted-asc", "sorted-desc"));
+        ths.forEach((th) => th.classList.remove("sorted-asc", "sorted-desc"));
         const headers = {
           player: 2,
           club: 3,
           league: 4,
           goals: 5,
           ga: 6,
-          goalsPerMatch: 7
+          goalsPerMatch: 7,
         };
         const index = headers[currentScorerSortColumn];
         if (index) {
           const th = document.querySelector(`tr th:nth-child(${index})`);
           if (th) {
-            th.classList.add(currentScorerSortOrder === 1 ? "sorted-asc" : "sorted-desc");
+            th.classList.add(
+              currentScorerSortOrder === 1 ? "sorted-asc" : "sorted-desc"
+            );
           }
         }
       }
-      
+
       function updateAssistsSortIndicators() {
         const ths = document.querySelectorAll("th.sortable");
-        ths.forEach(th => th.classList.remove("sorted-asc", "sorted-desc"));
+        ths.forEach((th) => th.classList.remove("sorted-asc", "sorted-desc"));
         const headers = {
           player: 2,
           club: 3,
           league: 4,
           assists: 5,
           apm: 6,
-          ga: 7
+          ga: 7,
         };
         const index = headers[currentAssistsSortColumn];
         if (index) {
           const th = document.querySelector(`tr th:nth-child(${index})`);
           if (th) {
-            th.classList.add(currentAssistsSortOrder === 1 ? "sorted-asc" : "sorted-desc");
+            th.classList.add(
+              currentAssistsSortOrder === 1 ? "sorted-asc" : "sorted-desc"
+            );
           }
         }
       }
-      
+
       loadData();
     </script>
-    
+
     <!-- Footer -->
-    <footer style="text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-color);">
+    <footer
+      style="
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: var(--text-color);
+      "
+    >
       made by seemyk
     </footer>
   </body>
