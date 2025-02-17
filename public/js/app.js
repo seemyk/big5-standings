@@ -38,31 +38,11 @@ function toggleDarkMode() {
 const API_KEY = "eac1def5f44245d0ba2ae2d1312901af";
 
 const leagues = [
-  {
-    name: "Premier League",
-    code: "PL",
-    emblem: "/images/logos/PL.png",
-  },
-  {
-    name: "Serie A",
-    code: "SA",
-    emblem: "/images/logos/SA.png",
-  },
-  {
-    name: "La Liga",
-    code: "PD",
-    emblem: "/images/logos/PD.png",
-  },
-  {
-    name: "Bundesliga",
-    code: "BL1",
-    emblem: "/images/logos/BL1.png",
-  },
-  {
-    name: "Ligue 1",
-    code: "FL1",
-    emblem: "/images/logos/FL1.png",
-  },
+  { name: "Premier League", code: "PL", emblem: "/images/logos/PL.png" },
+  { name: "Serie A", code: "SA", emblem: "/images/logos/SA.png" },
+  { name: "La Liga", code: "PD", emblem: "/images/logos/PD.png" },
+  { name: "Bundesliga", code: "BL1", emblem: "/images/logos/BL1.png" },
+  { name: "Ligue 1", code: "FL1", emblem: "/images/logos/FL1.png" },
 ];
 
 function getLeagueEmblem(leagueName) {
@@ -76,11 +56,8 @@ let allAssistsGlobal = [];
 let currentSortColumn = null;
 let currentSortOrder = 1;
 
-// Wraps content in bold with live color if the team is live.
 function liveFormat(content, isLive) {
-  return isLive
-    ? `<b style="color:var(--live-color);">${content}</b>`
-    : content;
+  return isLive ? `<b style="color:var(--live-color);">${content}</b>` : content;
 }
 
 async function fetchLeagueStandings(league) {
@@ -154,7 +131,6 @@ async function updateLiveFlags(teams) {
   });
 }
 
-// Renders the standings table.
 function renderTable(teams) {
   const standingsDiv = document.getElementById("standings");
   let html = `<table>
@@ -172,6 +148,7 @@ function renderTable(teams) {
     <th class="sortable" onclick="sortTable('points')" title="Points">Pts</th>
     <th class="sortable" onclick="sortTable('pointsPerMatch')" title="Points per Match">PPM</th>
   </tr>`;
+  
   teams.forEach((team, index) => {
     let crestUrl = team.team.crestUrl || team.team.crest;
     let longName = team.team.name;
@@ -179,7 +156,7 @@ function renderTable(teams) {
     let teamLink = `<a href="https://www.google.com/search?q=${encodeURIComponent(longName)}" target="_blank" style="text-decoration:none; color:inherit;">${shortName}</a>`;
     let teamCell = "";
     if (crestUrl) {
-      teamCell = `<img src="${crestUrl}" alt="${longName} Crest" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+      teamCell = `<img src="${crestUrl}" alt="${longName} Crest" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
     }
     teamCell += teamLink;
     if (team.live) {
@@ -189,7 +166,7 @@ function renderTable(teams) {
     let leagueEmblem = getLeagueEmblem(team.league);
     let leagueCell = "";
     if (leagueEmblem) {
-      leagueCell = `<img src="${leagueEmblem}" alt="${team.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+      leagueCell = `<img src="${leagueEmblem}" alt="${team.league} Logo" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
     }
     leagueCell += team.league;
     let wins = team.live && team.liveResult === "W" ? liveFormat(team.won, true) : team.won;
@@ -197,6 +174,7 @@ function renderTable(teams) {
     let losses = team.live && team.liveResult === "L" ? liveFormat(team.lost, true) : team.lost;
     let points = team.live ? liveFormat(team.points, true) : team.points;
     let ppm = team.playedGames > 0 ? (team.points / team.playedGames).toFixed(2) : "0.00";
+    
     html += `<tr>
       <td>${index + 1}</td>
       <td class="team-name">${teamCell}</td>
@@ -212,12 +190,16 @@ function renderTable(teams) {
       <td>${ppm}</td>
     </tr>`;
   });
+  
   html += `</table>`;
   standingsDiv.innerHTML = html;
   updateSortIndicators();
+  
+  // Hide skeleton loader and display standings
+  document.getElementById("skeleton").style.display = "none";
+  standingsDiv.style.display = "block";
 }
 
-// Renders the goal scorers table.
 function renderScorers(scorers) {
   const standingsDiv = document.getElementById("standings");
   let html = `<table class="scorers-table">
@@ -230,6 +212,7 @@ function renderScorers(scorers) {
     <th class="sortable" onclick="sortScorers('ga')" title="Goal Contributions (Goals + Assists)">G/A</th>
     <th class="sortable" onclick="sortScorers('goalsPerMatch')" title="Goals per Game">GPG</th>
   </tr>`;
+  
   scorers.forEach((item, index) => {
     let goals = item.goals !== undefined ? item.goals : 0;
     let assists = item.assists !== undefined ? item.assists : 0;
@@ -242,14 +225,14 @@ function renderScorers(scorers) {
     if (item.team) {
       let clubLogo = item.team.crest || "";
       if (clubLogo) {
-        clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+        clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
       }
       clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(item.team.name)}" target="_blank" style="text-decoration:none; color:inherit;">${item.team.shortName || item.team.name}</a>`;
     }
     let leagueEmblem = getLeagueEmblem(item.league);
     let leagueCell = "";
     if (leagueEmblem) {
-      leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+      leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
     }
     leagueCell += item.league || "";
     html += `<tr>
@@ -262,12 +245,12 @@ function renderScorers(scorers) {
       <td>${gpg}</td>
     </tr>`;
   });
+  
   html += `</table>`;
   standingsDiv.innerHTML = html;
   updateScorersSortIndicators();
 }
 
-// Renders the assists table.
 function renderAssists(assistsData) {
   const filtered = assistsData.filter((item) => item.assists && item.assists > 0);
   const standingsDiv = document.getElementById("standings");
@@ -281,6 +264,7 @@ function renderAssists(assistsData) {
     <th class="sortable" onclick="sortAssists('apm')" title="Assists per Game">APM</th>
     <th class="sortable" onclick="sortAssists('ga')" title="Goal Contributions (Goals + Assists)">G/A</th>
   </tr>`;
+  
   filtered.forEach((item, index) => {
     let assists = item.assists !== undefined ? item.assists : 0;
     let goals = item.goals !== undefined ? item.goals : 0;
@@ -293,14 +277,14 @@ function renderAssists(assistsData) {
     if (item.team) {
       let clubLogo = item.team.crest || "";
       if (clubLogo) {
-        clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+        clubName += `<img src="${clubLogo}" alt="${item.team.name} Logo" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
       }
       clubName += `<a href="https://www.google.com/search?q=${encodeURIComponent(item.team.name)}" target="_blank" style="text-decoration:none; color:inherit;">${item.team.shortName || item.team.name}</a>`;
     }
     let leagueEmblem = getLeagueEmblem(item.league);
     let leagueCell = "";
     if (leagueEmblem) {
-      leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" style="height:20px; margin-right:5px; vertical-align: middle;">`;
+      leagueCell = `<img src="${leagueEmblem}" alt="${item.league} Logo" loading="lazy" style="height:20px; margin-right:5px; vertical-align: middle;">`;
     }
     leagueCell += item.league || "";
     html += `<tr>
@@ -313,6 +297,7 @@ function renderAssists(assistsData) {
       <td>${ga}</td>
     </tr>`;
   });
+  
   html += `</table>`;
   standingsDiv.innerHTML = html;
   updateAssistsSortIndicators();
