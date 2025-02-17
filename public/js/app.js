@@ -41,27 +41,27 @@ const leagues = [
   {
     name: "Premier League",
     code: "PL",
-    emblem: "https://crests.football-data.org/PL.png",
+    emblem: "/images/logos/PL.png",
   },
   {
     name: "Serie A",
     code: "SA",
-    emblem: "https://crests.football-data.org/SA.png",
+    emblem: "/images/logos/SA.png",
   },
   {
     name: "La Liga",
     code: "PD",
-    emblem: "https://crests.football-data.org/PD.png",
+    emblem: "/images/logos/PD.png",
   },
   {
     name: "Bundesliga",
     code: "BL1",
-    emblem: "https://crests.football-data.org/BL1.png",
+    emblem: "/images/logos/BL1.png",
   },
   {
     name: "Ligue 1",
     code: "FL1",
-    emblem: "https://crests.football-data.org/FL1.png",
+    emblem: "/images/logos/FL1.png",
   },
 ];
 
