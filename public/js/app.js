@@ -150,6 +150,7 @@ function renderTable(teams) {
   </tr>`;
   
   teams.forEach((team, index) => {
+    console.log("League for team", index + 1, ":", team.league);
     let crestUrl = team.team.crestUrl || team.team.crest;
     let longName = team.team.name;
     let shortName = team.team.shortName || longName;
