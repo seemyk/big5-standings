@@ -355,7 +355,7 @@ async function loadAssists() {
 }
 
 function loadData() {
-  console.log("loadData() called, currentView:", currentView);
+  console.log("loadData() called; currentView:", currentView);
   if (currentView === "table") {
     loadStandings();
   } else if (currentView === "scorers") {
