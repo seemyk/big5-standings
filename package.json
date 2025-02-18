@@ -5,9 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "minify-js": "terser public/js/app.js -o public/js/app.min.js",
-    "minify-css": "cssnano public/css/style.css public/css/style.min.css",
-    "build": "npm run minify-js && npm run minify-css"
   },
   "dependencies": {
     "express": "^4.21.2",
