@@ -196,8 +196,7 @@ function renderTable(teams) {
   standingsDiv.innerHTML = html;
   updateSortIndicators();
   
-  // Hide skeleton loader and display standings
-  document.getElementById("skeleton").style.display = "none";
+  // Simply display the standings div
   standingsDiv.style.display = "block";
 }
 
@@ -412,7 +411,7 @@ function sortScorers(columnKey) {
   }
   allScorersGlobal.sort((a, b) => {
     let aVal = a[columnKey],
-      bVal = b[columnKey];
+        bVal = b[columnKey];
     if (columnKey === "player") {
       aVal = a.player.name.toUpperCase();
       bVal = b.player.name.toUpperCase();
