@@ -305,6 +305,7 @@ function renderAssists(assistsData) {
 }
 
 async function loadStandings() {
+  console.log("loadStandings() called");
   try {
     const promises = leagues.map((league) => fetchLeagueStandings(league));
     const results = await Promise.all(promises);
@@ -354,6 +355,7 @@ async function loadAssists() {
 }
 
 function loadData() {
+  console.log("loadData() called, currentView:", currentView);
   if (currentView === "table") {
     loadStandings();
   } else if (currentView === "scorers") {
