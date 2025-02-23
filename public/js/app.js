@@ -23,8 +23,6 @@ function toggleDarkMode() {
   }
 }
 
-const API_KEY = "eac1def5f44245d0ba2ae2d1312901af";
-
 const leagues = [
   { name: "Premier League", code: "PL", emblem: "/images/logos/PL.png" },
   { name: "Serie A", code: "SA", emblem: "/images/logos/SA.png" },
